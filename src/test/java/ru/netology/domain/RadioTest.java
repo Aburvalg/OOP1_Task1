@@ -4,16 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RadioTest {
-    // for Station
+class RadioTest { // Default radio
     @Test
     void shouldSetNewStationMin() {
         Radio radio = new Radio();
         radio.setCurrentStation(0);
 
-        int expected = 0;
-        int actual = radio.getCurrentStation();
-        assertEquals(expected, actual);
+        assertEquals(0, radio.getCurrentStation());
     }
 
     @Test
@@ -27,7 +24,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldSetNewStationOverLimit() {
+    void shouldSetNewStatOverLimit() {
         Radio radio = new Radio();
         radio.setCurrentStation(23534545);
 
@@ -37,7 +34,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldSetNewStationNegative() {
+    void shouldSetNewStatNegative() {
         Radio radio = new Radio();
         radio.setCurrentStation(-235);
 
@@ -47,7 +44,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldNextStationStartZero() {
+    void shouldNextStatStartZero() {
         Radio radio = new Radio();
         radio.setCurrentStation(0); // важна последовательность выполнения методов
         radio.nextStation();
@@ -58,7 +55,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldNextStation() {
+    void shouldNextStat() {
         Radio radio = new Radio();
         radio.setCurrentStation(5); // важна последовательность выполнения методов
         radio.nextStation();
@@ -69,7 +66,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldNextStationStartLast() {
+    void shouldNextStatStartLast() {
         Radio radio = new Radio();
         radio.setCurrentStation(9); // важна последовательность выполнения методов
         radio.nextStation();
@@ -80,7 +77,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldPrevStationStartZero() {
+    void shouldPrevStatStartZero() {
         Radio radio = new Radio();
         radio.setCurrentStation(0);
         radio.prevStation();
@@ -91,7 +88,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldPrevStation() {
+    void shouldPrevStat() {
         Radio radio = new Radio();
         radio.setCurrentStation(6);
         radio.prevStation();
@@ -102,7 +99,7 @@ class RadioTest {
     }
 
     @Test
-    void shouldPrevStationStartLast() {
+    void shouldPrevStatStartLast() {
         Radio radio = new Radio();
         radio.setCurrentStation(9);
         radio.prevStation();
@@ -111,8 +108,6 @@ class RadioTest {
         int actual = radio.getCurrentStation();
         assertEquals(expected, actual);
     }
-
-    // for Volume
 
     @Test
     void shouldIncreaseVolume() {
@@ -139,10 +134,10 @@ class RadioTest {
     @Test
     void shouldIncreaseVolumeStartWMax() {
         Radio radio = new Radio();
-        radio.currentVolume(10);
+        radio.currentVolume(100);
         radio.increaseVolume();
 
-        int expected = 10;
+        int expected = 100;
         int actual = radio.getCurrentVolume();
         assertEquals(expected, actual);
     }
@@ -153,7 +148,7 @@ class RadioTest {
         radio.currentVolume(-11);
         radio.increaseVolume();
 
-        int expected = 10;
+        int expected = 100;
         int actual = radio.getCurrentVolume();
         assertEquals(expected, actual);
     }
@@ -183,10 +178,10 @@ class RadioTest {
     @Test
     void shouldDecreaseVolumeStartWMax() {
         Radio radio = new Radio();
-        radio.currentVolume(10);
+        radio.currentVolume(100);
         radio.decreaseVolume();
 
-        int expected = 9;
+        int expected = 99;
         int actual = radio.getCurrentVolume();
         assertEquals(expected, actual);
     }
@@ -194,7 +189,7 @@ class RadioTest {
     @Test
     void shouldDecreaseVolumeUnreal() {
         Radio radio = new Radio();
-        radio.currentVolume(11);
+        radio.currentVolume(120);
         radio.decreaseVolume();
 
         int expected = 0;
@@ -202,4 +197,132 @@ class RadioTest {
         assertEquals(expected, actual);
     }
 
-}
+        // RadioTestSetStations
+
+        @Test
+        void shouldSetNewStatMin() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(0);
+            assertEquals(0, radio.getCurrentStation());
+        }
+
+        @Test
+        void shouldSetNewStatMax() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(49);
+
+            int expected = 49;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldSetNewStationOverLimit() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(23534545);
+
+            int expected = 0;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldSetNewStationNegative() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(-235);
+
+            int expected = 0;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldNextStationStartZero() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(0); // важна последовательность выполнения методов
+            radio.nextStation();
+
+            int expected = 1;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldNextStation() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(25); // важна последовательность выполнения методов
+            radio.nextStation();
+
+            int expected = 26;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldNextStationStartLast() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(49); // важна последовательность выполнения методов
+            radio.nextStation();
+
+            int expected = 0;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldPrevStationStartZero() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(0);
+            radio.prevStation();
+
+            int expected = 49;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldPrevStation() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(26);
+            radio.prevStation();
+
+            int expected = 25;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldPrevStationStartLast() {
+            Radio radio = new Radio(50);
+            radio.setCurrentStation(49);
+            radio.prevStation();
+
+            int expected = 48;
+            int actual = radio.getCurrentStation();
+            assertEquals(expected, actual);
+        }
+
+        //RadioTestSetStationZero {
+        @Test
+        void shouldSetNewStationsMin() {
+            Radio radio = new Radio(0);
+            radio.setCurrentStation(1);
+            assertEquals(0, radio.getCurrentStation());
+        }
+
+
+   // RadioTestSetStationOne {
+
+        @Test
+        void shouldSetNewStation() {
+        Radio radio = new Radio(1);
+            radio.setCurrentStation(1);
+            assertEquals(0, radio.getCurrentStation());
+        }
+    }
+
+
+
+
+
+
