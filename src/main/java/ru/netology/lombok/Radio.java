@@ -1,36 +1,27 @@
-package ru.netology.domain;
+package ru.netology.lombok;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 
 public class Radio {
     private int currentStation;
     private int currentVolume;
     private int minStation;
     private int quantityStations = 10;
-    private int maxStation = calcMaxStation();
+    //private int maxStation = calcMaxStation();
     private int minVolume;
     private int maxVolume = 100;
-
-    public Radio(int quantityStations) {
-        this.quantityStations = quantityStations;
-        this.maxStation = calcMaxStation();
-    }
-
-    public Radio() {
-    }
 
     public int calcMaxStation() {
         if (quantityStations > 0) {
             return quantityStations - 1;
         } else
-        return 0;
-    }
-
-
-    public int getCurrentStation() {
-        return currentStation;
-    }
-
-    public int getCurrentVolume() {
-        return currentVolume;
+            return 0;
     }
 
     //for Station
@@ -38,14 +29,14 @@ public class Radio {
         if (currentStation < minStation) {
             return;
         }
-        if (currentStation > maxStation) {
+        if (currentStation > calcMaxStation()) {
             return;
         }
         this.currentStation = currentStation;
     }
 
     public void nextStation() {
-        if (currentStation < maxStation) {
+        if (currentStation < calcMaxStation()) {
             currentStation++;
         } else {
             currentStation = minStation;
@@ -56,7 +47,7 @@ public class Radio {
         if (currentStation > minStation) {
             currentStation = currentStation - 1;
         } else {
-            currentStation = maxStation;
+            currentStation = calcMaxStation();
         }
     }
 
